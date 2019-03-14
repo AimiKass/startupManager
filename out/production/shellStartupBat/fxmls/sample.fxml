@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="634.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UIController">
+   <children>
+      <ListView fx:id="listView" layoutX="8.0" layoutY="159.0" prefHeight="487.0" prefWidth="618.0" />
+      <TextField fx:id="textFieldForDiskName" layoutX="62.0" layoutY="52.0" prefHeight="25.0" prefWidth="33.0" text="C:\" />
+      <ChoiceBox fx:id="choiceBox" layoutX="138.0" layoutY="52.0" prefHeight="25.0" prefWidth="357.0">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="All Users" />
+            </FXCollections>
+         </items>
+      </ChoiceBox>
+      <Button fx:id="addBtn" layoutX="17.0" layoutY="658.0" mnemonicParsing="false" onAction="#addBtn" prefHeight="25.0" prefWidth="50.0" text="Add" />
+      <Button fx:id="deleteBtn" layoutX="15.0" layoutY="693.0" mnemonicParsing="false" onAction="#deleteBtn" text="Delete" />
+      <Button fx:id="saveBtn" layoutX="15.0" layoutY="729.0" mnemonicParsing="false" onAction="#saveBtn" prefHeight="25.0" prefWidth="50.0" text="Save" />
+   </children>
+</Pane>
