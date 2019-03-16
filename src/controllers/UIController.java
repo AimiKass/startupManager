@@ -3,8 +3,10 @@ package controllers;
 import checkForExistingData.CheckInDataBase;
 import extractions.UsernameExtraction;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
@@ -29,7 +31,7 @@ public class UIController
     @FXML
     ChoiceBox<String> choiceBox = new ChoiceBox<>();
 
-    ObservableList<String> observableListWithSites = FXCollections.observableArrayList("test1", "test2");
+    private ObservableList<String> observableListWithSites = FXCollections.observableArrayList("test1", "test2");
 
 
     @FXML
@@ -52,13 +54,26 @@ public class UIController
         listView.setItems(observableListWithSites);
         listView.setCellFactory(TextFieldListCell.forListView());
         listView.setEditable(true);
+
+
+
+        listView.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>()
+        {
+            @Override
+            public void handle(ListView.EditEvent<String> event)
+            {
+                listView.getItems().set(event.getIndex(), event.getNewValue());
+            }
+        });
+
+
     }
 
 
     @FXML
     private void addBtn(ActionEvent actionEvent)
     {
-        listView.getItems().addAll("newUrl");
+        observableListWithSites.addAll("newUrl"+(observableListWithSites.size()+1));
     }
 
     @FXML
