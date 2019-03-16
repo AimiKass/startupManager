@@ -9,7 +9,7 @@ import java.nio.file.Path;
 
 public class WriteToDataBase
 {
-    public void writeUsername(Path dBPath,String[] names)
+    public void username(Path dBPath, String[] names)
     {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(dBPath.toString()));
@@ -21,7 +21,7 @@ public class WriteToDataBase
         }catch (IOException e )
         {
             ExceptionDialog exceptionDialog = new ExceptionDialog();
-            exceptionDialog.popDialog("WriteToDataBase > writeUsername");
+            exceptionDialog.popDialog("WriteToDataBase > username");
             e.printStackTrace();
         }
 
