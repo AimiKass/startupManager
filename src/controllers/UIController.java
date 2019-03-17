@@ -12,6 +12,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldListCell;
+import models.Site;
 import writeReadFromDB.ReadFromDataBase;
 import writeReadFromDB.WriteToDataBase;
 
@@ -25,13 +26,13 @@ public class UIController
     private Path dBPath = Paths.get("src\\dataBase\\username.txt");
 
     @FXML
-    ListView<String> listView;
+    ListView<Site> listView;
     @FXML
     TextField textFieldForDiskName = new TextField();
     @FXML
     ChoiceBox<String> choiceBox = new ChoiceBox<>();
 
-    private ObservableList<String> observableListWithSites = FXCollections.observableArrayList("test1", "test2");
+    private ObservableList<Site> observableListWithSites = FXCollections.observableArrayList(new Site("https:/www.facebook.com","Facebook"));
 
 
     @FXML
@@ -52,15 +53,16 @@ public class UIController
         choiceBox.getSelectionModel().select(1);
 
         listView.setItems(observableListWithSites);
-        listView.setCellFactory(TextFieldListCell.forListView());
+        // TODO: 3/17/2019 Check that shit
+//        listView.setCellFactory(TextFieldListCell.forListView());
         listView.setEditable(true);
 
 
-
-        listView.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>()
+        // TODO: 3/17/2019 Check that shit too
+        listView.setOnEditCommit(new EventHandler<ListView.EditEvent<Site>>()
         {
             @Override
-            public void handle(ListView.EditEvent<String> event)
+            public void handle(ListView.EditEvent<Site> event)
             {
                 listView.getItems().set(event.getIndex(), event.getNewValue());
             }
@@ -73,7 +75,7 @@ public class UIController
     @FXML
     private void addBtn(ActionEvent actionEvent)
     {
-        observableListWithSites.addAll("newUrl"+(observableListWithSites.size()+1));
+        observableListWithSites.addAll(new Site("N/A","newUrl"+(observableListWithSites.size()+1)));
     }
 
     @FXML
