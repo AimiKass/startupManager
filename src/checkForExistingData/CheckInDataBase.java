@@ -5,7 +5,7 @@ import java.nio.file.Path;
 
 public class CheckInDataBase
 {
-    public boolean forUsername(Path dataBasePath)
+    public boolean forExistingData(Path dataBasePath)
     {
         return Files.exists(dataBasePath);
     }

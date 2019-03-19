@@ -10,7 +10,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="634.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UIController">
    <children>
-      <ListView fx:id="listView" layoutX="8.0" layoutY="159.0" prefHeight="487.0" prefWidth="618.0" />
+      <ListView fx:id="listView" editable="true" layoutX="8.0" layoutY="159.0" prefHeight="487.0" prefWidth="618.0" />
       <TextField fx:id="textFieldForDiskName" layoutX="62.0" layoutY="52.0" prefHeight="25.0" prefWidth="33.0" text="C:\" />
       <ChoiceBox fx:id="choiceBox" layoutX="138.0" layoutY="52.0" prefHeight="25.0" prefWidth="357.0">
          <items>
@@ -19,8 +19,11 @@
             </FXCollections>
          </items>
       </ChoiceBox>
-      <Button fx:id="addBtn" layoutX="17.0" layoutY="658.0" mnemonicParsing="false" onAction="#addBtn" prefHeight="25.0" prefWidth="50.0" text="Add" />
-      <Button fx:id="deleteBtn" layoutX="15.0" layoutY="693.0" mnemonicParsing="false" onAction="#deleteBtn" text="Delete" />
-      <Button fx:id="saveBtn" layoutX="15.0" layoutY="729.0" mnemonicParsing="false" onAction="#saveBtn" prefHeight="25.0" prefWidth="50.0" text="Save" />
+      <Button fx:id="addBtn" layoutX="344.0" layoutY="674.0" mnemonicParsing="false" onAction="#addBtn" prefHeight="25.0" prefWidth="50.0" text="Add" />
+      <Button fx:id="deleteBtn" layoutX="417.0" layoutY="674.0" mnemonicParsing="false" onAction="#deleteBtn" text="Delete" />
+      <Button fx:id="saveBtn" layoutX="561.0" layoutY="674.0" mnemonicParsing="false" onAction="#saveBtn" prefHeight="25.0" prefWidth="50.0" text="Save" />
+      <TextField fx:id="textFieldForNewUrl" alignment="CENTER" layoutX="17.0" layoutY="662.0" prefHeight="25.0" prefWidth="309.0" promptText="URL" />
+      <TextField fx:id="textFieldForNewUrlName" alignment="CENTER" layoutX="18.0" layoutY="691.0" prefHeight="25.0" prefWidth="309.0" promptText="Site`s Name (Automatically Added)" />
+      <Button fx:id="clearBtn" layoutX="138.0" layoutY="723.0" mnemonicParsing="false" onAction="#clearBtn" text="Clear" />
    </children>
 </Pane>

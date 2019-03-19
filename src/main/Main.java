@@ -24,6 +24,7 @@ public class Main extends Application
 
         stage = primaryStage;
         stage.setScene(scene);
+        // TODO: 3/19/2019 change title
         stage.setTitle("LALALALALALA");
         stage.show();
 

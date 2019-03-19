@@ -15,8 +15,10 @@ public class Site
 
     public String toString()
     {
-        // TODO: 3/17/2019 make it look beautiful :)
-        return (name+"       ("+url+")");
+        int length =90-name.length();
+        String newUrlFormat = "("+url+")";
+
+        return String.format(name +"%1$"+length+"s", newUrlFormat);
     }
 
     public void setUrl(String url) {
