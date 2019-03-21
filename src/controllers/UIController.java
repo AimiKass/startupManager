@@ -26,7 +26,9 @@ public class UIController
     public TextField textFieldForNewUrl;
     public TextField textFieldForNewUrlName;
     private Path dbPathForUsername = Paths.get("src\\dataBase\\username.txt");
+    private Path dbPathForUrlName = Paths.get("src\\dataBase\\UrlNames.txt");
     private Path dbPathForUrls = null;
+    private ObservableList<Site> observableListWithSites;
 
     @FXML
     ListView<Site> listView;
@@ -35,7 +37,6 @@ public class UIController
     @FXML
     ChoiceBox<String> choiceBox = new ChoiceBox<>();
 
-    private ObservableList<Site> observableListWithSites = FXCollections.observableArrayList(new Site("https:/www.facebook.com","Facebook"));
 
 
     @FXML
@@ -47,28 +48,69 @@ public class UIController
         WriteToDataBase writeToDataBase = new WriteToDataBase();
         ReadFromDataBase readFromDataBase = new ReadFromDataBase();
 
+        List<String> allUrls = new ArrayList<>();
+        List<String> allUrlNames = new ArrayList<>();
+
+
         if (!checkInDataBase.forExistingData(dbPathForUsername))
         {
             writeToDataBase.username(dbPathForUsername, usernameExtraction.getTheFullUsernameAndTheHalfOne());
+            observableListWithSites = FXCollections.observableArrayList(new Site("https:/www.facebook.com","Facebook"));
+            dbPathForUrls = Paths.get(textFieldForDiskName.getText()+"Users\\"+readFromDataBase.readUsername(dbPathForUsername)[1]+"\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\StartUpShit.bat");
+
         }
+        else
+        {
+            dbPathForUrls = Paths.get(textFieldForDiskName.getText()+"Users\\"+readFromDataBase.readUsername(dbPathForUsername)[1]+"\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\StartUpShit.bat");
+
+            allUrls.addAll(readFromDataBase.readUrls(dbPathForUrls));
+
+
+            allUrlNames.addAll(readFromDataBase.readUrlNames(dbPathForUrlName));
+
+
+            List<Site> allSites = new ArrayList<>();
+
+            for (int i=0 ; i< allUrls.size() ; i++)
+                allSites.add(new Site(allUrls.get(i), allUrlNames.get(i)));
+
+            observableListWithSites = FXCollections.observableArrayList(allSites);
+
+        }
+
 
         choiceBox.getItems().add("Just You ("+readFromDataBase.readUsername(dbPathForUsername)[0]+")");
         choiceBox.getSelectionModel().select(1);
 
 
-        dbPathForUrls = Paths.get(textFieldForDiskName.getText()+"Users\\"+readFromDataBase.readUsername(dbPathForUsername)[1]+"\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\StartUpShit.bat");
-
-
         listView.setItems(observableListWithSites);
+
+
+
 
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Site>() {
             @Override
             public void changed(ObservableValue<? extends Site> observable, Site oldValue, Site newValue)
             {
-                textFieldForNewUrl.setText(observable.getValue().getUrl());
-                textFieldForNewUrlName.setText(observable.getValue().getName());
+                if (observable.getValue() != null)
+                    if (observableListWithSites.size() == 0)
+                    {
+                        textFieldForNewUrl.setText("");
+                        textFieldForNewUrlName.setText("");
+                    }else
+                    {
+                        textFieldForNewUrl.setText(observable.getValue().getUrl());
+                        textFieldForNewUrlName.setText(observable.getValue().getName());
+                    }
+                else
+                {
+                    textFieldForNewUrl.setText("");
+                    textFieldForNewUrlName.setText("");
+                }
+
             }
         });
+
 
 
     }
@@ -79,13 +121,14 @@ public class UIController
     {
         RetrieveUrlsName retrieveUrlsName = new RetrieveUrlsName();
 
-
         if (textFieldForNewUrlName.getText().equals(""))
             observableListWithSites.addAll(new Site(textFieldForNewUrl.getText(), retrieveUrlsName.getNameFrom(textFieldForNewUrl.getText())));
         else
             observableListWithSites.addAll(new Site(textFieldForNewUrl.getText(),textFieldForNewUrlName.getText()));
 
+
         clearTextFields();
+        listView.getSelectionModel().clearSelection(listView.getSelectionModel().getSelectedIndex());
     }
 
     @FXML
@@ -95,19 +138,47 @@ public class UIController
     }
 
 
+
     @FXML
     private void saveBtn(ActionEvent actionEvent)
     {
-        WriteToDataBase writeToDataBase = new WriteToDataBase();
-        CheckInDataBase checkInDataBase = new CheckInDataBase();
-        System.out.println(dbPathForUrls);
+        ReadFromDataBase readFromDataBase = new ReadFromDataBase();
 
-        List<String> urls = new ArrayList<String>();
+        List<String> urlsToBeChecked = new ArrayList<String>(readFromDataBase.readUrls(dbPathForUrls));
+        boolean newWriteInDataBaseIs = true;
 
-        for (Site site:observableListWithSites)
-            urls.add(site.getUrl());
 
-        writeToDataBase.urls(dbPathForUrls,urls);
+        for (int i=0 ; i< urlsToBeChecked.size() ; i++)
+            if (urlsToBeChecked.get(i).equals(observableListWithSites.get(i).getUrl()))
+                newWriteInDataBaseIs = false;
+
+
+
+
+        if (newWriteInDataBaseIs)
+        {
+            WriteToDataBase writeToDataBase = new WriteToDataBase();
+
+            List<String> urlsToBeAdded = new ArrayList<String>();
+            List<String> namesToBeAdded = new ArrayList<String>();
+
+
+            for (Site site:observableListWithSites)
+            {
+                urlsToBeAdded.add(site.getUrl());
+                namesToBeAdded.add(site.getName());
+            }
+            writeToDataBase.urls(dbPathForUrls,urlsToBeAdded);
+            writeToDataBase.urlNames(dbPathForUrlName,namesToBeAdded);
+
+
+
+        }else
+        {
+            observableListWithSites.get(listView.getSelectionModel().getSelectedIndex()).setName(textFieldForNewUrlName.getText());
+            listView.getSelectionModel().clearSelection(listView.getSelectionModel().getSelectedIndex());
+        }
+
 
     }
 
@@ -115,8 +186,8 @@ public class UIController
     private void clearBtn(ActionEvent actionEvent) throws IOException
     {
         clearTextFields();
+        listView.getSelectionModel().clearSelection(listView.getSelectionModel().getSelectedIndex());
     }
-
 
 
 
@@ -127,7 +198,7 @@ public class UIController
     }
 
 
-    }
+}
 
 
 
