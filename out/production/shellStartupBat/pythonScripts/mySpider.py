@@ -1,14 +1,14 @@
-from bs4 import BeautifulSoup 
+from bs4 import BeautifulSoup as bS
 import sys
-import requests
 
 
-response = requests.get(sys.argv[1])
+from urllib import request
+url = sys.argv[1]
+html = request.urlopen(url).read().decode('utf8')
 
 
-soup = BeautifulSoup(response.text,"lxml")
-titleTag = soup.html.head.title
+soup = bS(html, 'html.parser')
+title = soup.find('title')
     
-print (titleTag.string)
-    
+print(title.string)
     

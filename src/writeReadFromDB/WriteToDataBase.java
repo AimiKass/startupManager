@@ -49,4 +49,24 @@ public class WriteToDataBase
             e.printStackTrace();
         }
     }
+
+
+    public void urlNames(Path dbPath , List<String> names)
+    {
+        try{
+            BufferedWriter writer = new BufferedWriter(new FileWriter(dbPath.toString()));
+            for (String name:names)
+            {
+                writer.write(name);
+                writer.newLine();
+            }
+            writer.close();
+
+        }catch (IOException e)
+        {
+            ExceptionDialog exceptionDialog = new ExceptionDialog();
+            exceptionDialog.popDialog("WriteToDataBase > urlNames");
+            e.printStackTrace();
+        }
+    }
 }

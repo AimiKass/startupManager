@@ -8,10 +8,10 @@ public class RetrieveUrlsName
 {
     public String getNameFrom(String url) throws IOException
     {
-        Process process = Runtime.getRuntime().exec("pythonScripts src/pythonScripts/mySpider.py "+ url);
+        Process process = Runtime.getRuntime().exec("python src/pythonScripts/mySpider.py "+ url);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-        String line = "";
+        String line;
         line = bufferedReader.readLine();
 
         return line;
