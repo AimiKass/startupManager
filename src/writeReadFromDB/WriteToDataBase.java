@@ -51,6 +51,7 @@ public class WriteToDataBase
     }
 
 
+    //for multiple names
     public void urlNames(Path dbPath , List<String> names)
     {
         try{
@@ -60,6 +61,26 @@ public class WriteToDataBase
                 writer.write(name);
                 writer.newLine();
             }
+            writer.close();
+
+        }catch (IOException e)
+        {
+            ExceptionDialog exceptionDialog = new ExceptionDialog();
+            exceptionDialog.popDialog("WriteToDataBase > urlNames");
+            e.printStackTrace();
+        }
+    }
+
+
+    //for one name
+    public void urlNames(Path dbPath , String name)
+    {
+        try{
+            BufferedWriter writer = new BufferedWriter(new FileWriter(dbPath.toString()));
+
+            writer.write(name);
+            writer.newLine();
+
             writer.close();
 
         }catch (IOException e)

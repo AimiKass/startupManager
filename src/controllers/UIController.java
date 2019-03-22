@@ -52,20 +52,18 @@ public class UIController
         List<String> allUrlNames = new ArrayList<>();
 
 
-        if (!checkInDataBase.forExistingData(dbPathForUsername))
+        if (!checkInDataBase.forExistingData(dbPathForUsername) || !checkInDataBase.forExistingData(dbPathForUrlName))
         {
             writeToDataBase.username(dbPathForUsername, usernameExtraction.getTheFullUsernameAndTheHalfOne());
             observableListWithSites = FXCollections.observableArrayList(new Site("https:/www.facebook.com","Facebook"));
             dbPathForUrls = Paths.get(textFieldForDiskName.getText()+"Users\\"+readFromDataBase.readUsername(dbPathForUsername)[1]+"\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\StartUpShit.bat");
-
+            writeToDataBase.urlNames(dbPathForUrlName,observableListWithSites.get(0).getName());
         }
         else
         {
             dbPathForUrls = Paths.get(textFieldForDiskName.getText()+"Users\\"+readFromDataBase.readUsername(dbPathForUsername)[1]+"\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\StartUpShit.bat");
 
             allUrls.addAll(readFromDataBase.readUrls(dbPathForUrls));
-
-
             allUrlNames.addAll(readFromDataBase.readUrlNames(dbPathForUrlName));
 
 

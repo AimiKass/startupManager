@@ -102,7 +102,6 @@ public class ReadFromDataBase
             e.printStackTrace();
         }
 
-
         return names;
     }
 
