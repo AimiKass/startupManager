@@ -15,10 +15,11 @@ public class Site
     public String toString()
     {
         int length =90-name.length();
-        String newUrlFormat = "("+ getTrimmedUrl(url)+")";
+        String newUrlFormat = "("+ getSplittedUrl(url)+")";
 
         return String.format(name +"%1$"+length+"s", newUrlFormat);
     }
+
 
     public void setUrl(String url) {
         this.url = url;
@@ -37,26 +38,18 @@ public class Site
     }
 
 
-    private String getTrimmedUrl(String url)
+    private String getSplittedUrl(String url)
     {
-        StringBuilder stringBuilder = new StringBuilder(url);
-
-        int substringStartIndex = 0;
-        int substringEndIndex = 0;
-
-        if (stringBuilder.toString().contains("www"))
-            substringStartIndex = stringBuilder.toString().indexOf("www");
-        else
-            substringStartIndex = stringBuilder.toString().indexOf("/");
-
-        stringBuilder.deleteCharAt(stringBuilder.toString().indexOf("/"));
-
-        if (stringBuilder.toString().contains("/"))
-            substringEndIndex = stringBuilder.toString().indexOf("/");
-        else
-            substringEndIndex = stringBuilder.toString().length();
-
-
-        return stringBuilder.toString().substring(substringStartIndex-1,substringEndIndex);
+        if(url.contains("www"))
+        {
+            String[] splittedString1 = url.split("www.");
+            String[] splittedString2 = splittedString1[1].split("/");
+            return splittedString2[0];
+        }else
+        {
+            String[] splittedString1 = url.split("//");
+            String[] splittedString2 = splittedString1[1].split("/");
+            return splittedString2[0];
+        }
     }
 }

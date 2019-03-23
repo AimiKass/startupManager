@@ -55,9 +55,10 @@ public class UIController
         if (!checkInDataBase.forExistingData(dbPathForUsername) || !checkInDataBase.forExistingData(dbPathForUrlName))
         {
             writeToDataBase.username(dbPathForUsername, usernameExtraction.getTheFullUsernameAndTheHalfOne());
-            observableListWithSites = FXCollections.observableArrayList(new Site("https:/www.facebook.com","Facebook"));
+            observableListWithSites = FXCollections.observableArrayList(new Site("https://www.facebook.com","Facebook"));
             dbPathForUrls = Paths.get(textFieldForDiskName.getText()+"Users\\"+readFromDataBase.readUsername(dbPathForUsername)[1]+"\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\StartUpShit.bat");
-            writeToDataBase.urlNames(dbPathForUrlName,observableListWithSites.get(0).getName());
+            // TODO: 3/23/2019 check the above
+          //  writeToDataBase.urlNames(dbPathForUrlName,observableListWithSites.get(0).getName());
         }
         else
         {
@@ -142,6 +143,7 @@ public class UIController
     {
         ReadFromDataBase readFromDataBase = new ReadFromDataBase();
 
+        // TODO: 3/23/2019 check it for issues  !!!
         List<String> urlsToBeChecked = new ArrayList<String>(readFromDataBase.readUrls(dbPathForUrls));
         boolean newWriteInDataBaseIs = true;
 

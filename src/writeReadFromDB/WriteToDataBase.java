@@ -34,9 +34,7 @@ public class WriteToDataBase
         StringBuilder stringToWriteInDb = new StringBuilder("start chrome ");
         for (String url:urls)
             stringToWriteInDb.append("\"").append(url).append("\"").append(" ");
-
-        System.out.println(stringToWriteInDb);
-
+        
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(dbPath.toString()));
             writer.write(stringToWriteInDb.toString());
