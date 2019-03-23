@@ -3,7 +3,7 @@ package models;
 public class Site
 {
     String url;
-    String name;
+    String name ;
 
     public Site(String url, String name)
     {
@@ -12,14 +12,14 @@ public class Site
     }
 
     @Override
-
     public String toString()
     {
         int length =90-name.length();
-        String newUrlFormat = "("+url+")";
+        String newUrlFormat = "("+ getSplittedUrl(url)+")";
 
         return String.format(name +"%1$"+length+"s", newUrlFormat);
     }
+
 
     public void setUrl(String url) {
         this.url = url;
@@ -35,5 +35,21 @@ public class Site
 
     public String getName() {
         return name;
+    }
+
+
+    private String getSplittedUrl(String url)
+    {
+        if(url.contains("www"))
+        {
+            String[] splittedString1 = url.split("www.");
+            String[] splittedString2 = splittedString1[1].split("/");
+            return splittedString2[0];
+        }else
+        {
+            String[] splittedString1 = url.split("//");
+            String[] splittedString2 = splittedString1[1].split("/");
+            return splittedString2[0];
+        }
     }
 }
